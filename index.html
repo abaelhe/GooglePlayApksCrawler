@@ -3,87 +3,110 @@
   <head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <meta name="viewport" content="width=640">
 
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <link rel="stylesheet" href="stylesheets/core.css" media="screen">
+    <link rel="stylesheet" href="stylesheets/mobile.css" media="handheld, only screen and (max-device-width:640px)">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
 
+    <script type="text/javascript" src="javascripts/modernizr.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="javascripts/headsmart.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $('#main_content').headsmart()
+      })
+    </script>
     <title>Google Play Store Crawler by MarcelloLins</title>
   </head>
 
   <body>
-    <header>
-      <div class="inner">
-        <h1>Google Play Store Crawler</h1>
-        <h2>Simple scalable crawler for Apps data from the Play Store.</h2>
-        <a href="https://github.com/MarcelloLins/GooglePlayAppsCrawler" class="button"><small>View project on</small>GitHub</a>
-      </div>
-    </header>
+    <a id="forkme_banner" href="https://github.com/MarcelloLins/GooglePlayAppsCrawler">View on GitHub</a>
+    <div class="shell">
 
-    <div id="content-wrapper">
-      <div class="inner clearfix">
-        <section id="main-content">
-          <h1>
-<a name="googleplaystorecrawler" class="anchor" href="#googleplaystorecrawler"><span class="octicon octicon-link"></span></a>GooglePlayStoreCrawler</h1>
+      <header>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            <h1>Google Play Store Crawler</h1>
+            <h2>Simple scalable crawler for Apps data from the Play Store.</h2>
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+      </header>
+
+      <section id="downloads">
+        <span class="inner">
+          <a href="https://github.com/MarcelloLins/GooglePlayAppsCrawler/zipball/master" class="zip"><em>download</em> .ZIP</a><a href="https://github.com/MarcelloLins/GooglePlayAppsCrawler/tarball/master" class="tgz"><em>download</em> .TGZ</a>
+        </span>
+      </section>
+
+
+      <span class="banner-fix"></span>
+
+
+      <section id="main_content">
+        <h1>
+<a id="googleplaystorecrawler" class="anchor" href="#googleplaystorecrawler" aria-hidden="true"><span class="octicon octicon-link"></span></a>GooglePlayStoreCrawler</h1>
 
 <p>Simple scalable crawler for Apps data from the Play Store.</p>
 
 <p>You don't have to input any of your Google Account credentials since this Crawler acts like a "Logged Out" user.</p>
 
 <h1>
-<a name="about-me" class="anchor" href="#about-me"><span class="octicon octicon-link"></span></a>About me</h1>
+<a id="about-me" class="anchor" href="#about-me" aria-hidden="true"><span class="octicon octicon-link"></span></a>About me</h1>
 
 <p>My name is Marcello Lins, i am a 23 y/o developer from Brazil who works with BigData and DataMining techniques at the moment.</p>
 
 <p><a href="http://about.me/marcellolins">http://about.me/marcellolins</a></p>
 
 <h1>
-<a name="what-is-this-project-about-" class="anchor" href="#what-is-this-project-about-"><span class="octicon octicon-link"></span></a>What is this project about ?</h1>
+<a id="what-is-this-project-about-" class="anchor" href="#what-is-this-project-about-" aria-hidden="true"><span class="octicon octicon-link"></span></a>What is this project about ?</h1>
 
 <p>The main idea of this project is to gather/mine data about apps of the Google Play Store and build a rich database so that developers, android fans and anyone else can use to generate statistics about the current play store situation</p>
 
 <p>There are many questions we have no answer at the moment and we should be able to answer than with this database.</p>
 
 <h1>
-<a name="what-do-i-need-before-i-start" class="anchor" href="#what-do-i-need-before-i-start"><span class="octicon octicon-link"></span></a>What do i need before i start?</h1>
+<a id="what-do-i-need-before-i-start" class="anchor" href="#what-do-i-need-before-i-start" aria-hidden="true"><span class="octicon octicon-link"></span></a>What do i need before i start?</h1>
 
 <ul>
 <li><p>I highly recommend you read all the pages of this wiki, which won`t take long.</p></li>
 <li><p>Know C#</p></li>
-</ul><h1>
-<a name="how-about-the-database" class="anchor" href="#how-about-the-database"><span class="octicon octicon-link"></span></a>How about the database?</h1>
+</ul>
+
+<h1>
+<a id="how-about-the-database" class="anchor" href="#how-about-the-database" aria-hidden="true"><span class="octicon octicon-link"></span></a>How about the database?</h1>
 
 <ul>
 <li><p>I have made my MongoDB database public, including a user with read/write permissions so we can all use and populate the same database</p></li>
 <li><p>If you feel like, you can make your own MongoDB Database and change the code Consts to point the output to your own MongoDB Database. No Biggie</p></li>
-</ul><p><strong>Refer to the Pages section of this wiki for individual information about each aspect of the project.</strong></p>
+</ul>
+
+<p><strong>Refer to the Pages section of this wiki for individual information about each aspect of the project.</strong></p>
+
+
+
 
 
 <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-        </section>
 
-        <aside id="sidebar">
-          <a href="https://github.com/MarcelloLins/GooglePlayAppsCrawler/zipball/master" class="button">
-            <small>Download</small>
-            .zip file
-          </a>
-          <a href="https://github.com/MarcelloLins/GooglePlayAppsCrawler/tarball/master" class="button">
-            <small>Download</small>
-            .tar.gz file
-          </a>
+      </section>
 
-          <p class="repo-owner"><a href="https://github.com/MarcelloLins/GooglePlayAppsCrawler"></a> is maintained by <a href="https://github.com/MarcelloLins">MarcelloLins</a>.</p>
+      <footer>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            <p>this project by <a href="https://github.com/MarcelloLins">MarcelloLins</a> can be found on <a href="https://github.com/MarcelloLins/GooglePlayAppsCrawler">GitHub</a></p>
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+        <p>Generated with <a href="http://pages.github.com">GitHub Pages</a> using Merlot</p>
+        <span class="octocat"></span>
+      </footer>
 
-          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
-        </aside>
-      </div>
     </div>
 
-  
+    
   </body>
 </html>
