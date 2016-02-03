@@ -18,6 +18,11 @@ The costs related to this project range from Virtual Machines costs, paid HTTP-P
 
 Make it happen !
 
+How do I Receive Updates of this project ?
+======================
+
+Subscribe to our <a href="http://eepurl.com/bOlWe5">Exclusive Newsletter</a> to get access to updated batches of data automatically
+
 Important Updates:
 ---------------------------------------------------------------------------
 
