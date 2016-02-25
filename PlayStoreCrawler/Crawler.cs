@@ -17,6 +17,7 @@ namespace PlayStoreCrawler
     class Crawler
     {
         private static Logger _logger;
+        private static MongoDBWrapper _mongoDB;
 
         /// <summary>
         /// Entry point of the crawler
@@ -29,7 +30,7 @@ namespace PlayStoreCrawler
             _logger = LogManager.GetCurrentClassLogger ();
 
             // Control Variable (Bool - Should the process use proxies? )
-            bool isUsingProxies = false;
+            bool isUsingProxies = false; 
 
             // Checking for the need to use HTTP proxies or not
             if (args != null && args.Length == 1)
@@ -63,6 +64,17 @@ namespace PlayStoreCrawler
                     System.Environment.Exit (-101);
                 }
             }
+
+            // Configuring MongoDB Wrapper
+            _logger.Info ("Setting up MongoDB Collections and Indexes");
+            _mongoDB = new MongoDBWrapper ();
+            string fullServerAddress = String.Join (":", Consts.MONGO_SERVER, Consts.MONGO_PORT);
+            _mongoDB.ConfigureDatabase (Consts.MONGO_USER, Consts.MONGO_PASS, Consts.MONGO_AUTH_DB, fullServerAddress, Consts.MONGO_TIMEOUT, Consts.MONGO_DATABASE, Consts.MONGO_COLLECTION);
+
+            // Ensuring the database collections have the proper indexes
+            _mongoDB.EnsureIndex ("Url");
+            _mongoDB.EnsureIndex ("IsBusy", Consts.QUEUED_APPS_COLLECTION);
+            _mongoDB.EnsureIndex ("Url"   , Consts.QUEUED_APPS_COLLECTION);
 
             // Main Flow
             _logger.Info ("Started Bootstrapping Steps");
@@ -121,16 +133,7 @@ namespace PlayStoreCrawler
 
             // HTML Response
             string response;
-
-            // MongoDB Helper
-            // Configuring MongoDB Wrapper
-            MongoDBWrapper mongoDB   = new MongoDBWrapper ();
-            string fullServerAddress = String.Join (":", Consts.MONGO_SERVER, Consts.MONGO_PORT);
-            mongoDB.ConfigureDatabase (Consts.MONGO_USER, Consts.MONGO_PASS, Consts.MONGO_AUTH_DB, fullServerAddress, Consts.MONGO_TIMEOUT, Consts.MONGO_DATABASE, Consts.MONGO_COLLECTION);
-
-            // Ensuring the database has the proper indexe
-            mongoDB.EnsureIndex ("Url");
-
+            
             // Response Parser
             PlayStoreParser parser = new PlayStoreParser (); 
 
@@ -158,10 +161,10 @@ namespace PlayStoreCrawler
                     // Checks whether the app have been already processed 
 					// or is queued to be processed
 					foundUrls.Add (url);
-                    if ((!mongoDB.AppProcessed (Consts.APP_URL_PREFIX + url)) && (!mongoDB.AppQueued (url)))
+                    if ((!_mongoDB.AppProcessed (Consts.APP_URL_PREFIX + url)) && (!_mongoDB.AppQueued (url)))
                     {
                         // Than, queue it :)
-                        mongoDB.AddToQueue (url);
+                        _mongoDB.AddToQueue (url);
                         Thread.Sleep (250); // Hiccup
                     }
                 }
@@ -208,10 +211,10 @@ namespace PlayStoreCrawler
 						}
                         // Checks whether the app have been already processed 
 						foundUrls.Add (url);
-                        if ((!mongoDB.AppProcessed (Consts.APP_URL_PREFIX + url)) && (!mongoDB.AppQueued (url)))
+                        if ((!_mongoDB.AppProcessed (Consts.APP_URL_PREFIX + url)) && (!_mongoDB.AppQueued (url)))
                         {
                             // Than, queue it :)
-                            mongoDB.AddToQueue (url);
+                            _mongoDB.AddToQueue (url);
                             Thread.Sleep (250); // Hiccup
                         }
                     }
