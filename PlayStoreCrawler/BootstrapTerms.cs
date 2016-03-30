@@ -116,6 +116,26 @@ namespace PlayStoreCrawler
             miscSearchTerms.Add ("MATH");
             miscSearchTerms.Add ("COURSE");
             miscSearchTerms.Add ("PROGRAMMING");
+            miscSearchTerms.Add ("AOL");
+            miscSearchTerms.Add ("BLACKJACK");
+            miscSearchTerms.Add ("PRANK");
+            miscSearchTerms.Add ("BIBLE");
+            miscSearchTerms.Add ("CUBE");
+            miscSearchTerms.Add ("DIGITAL");
+            miscSearchTerms.Add ("CHOCOLATES");
+            miscSearchTerms.Add ("DRINKING");
+            miscSearchTerms.Add ("CHART");
+            miscSearchTerms.Add ("ICON");
+            miscSearchTerms.Add ("HANGMAN");
+            miscSearchTerms.Add ("VIRTUAL");
+            miscSearchTerms.Add ("VAMPIRE");
+            miscSearchTerms.Add ("ASSISTANT");
+            miscSearchTerms.Add ("TIP");
+            miscSearchTerms.Add ("HOROSCOPE");
+            miscSearchTerms.Add ("QUOTES");
+            miscSearchTerms.Add ("BACKGROUNDS");
+            miscSearchTerms.Add ("RECIPE");
+            miscSearchTerms.Add ("NAVIGATION");
 
             // Country Names as Search terms to increase even more the crawler's reach
             countryNames = new List<String> ();
