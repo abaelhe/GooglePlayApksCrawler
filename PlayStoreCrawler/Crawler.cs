@@ -129,7 +129,7 @@ namespace PlayStoreCrawler
 			bool isDonePagging = false;
 
             // Compiling Regular Expression used to parse the "pagToken" out of the Play Store
-            Regex pagTokenRegex = new Regex (@"GAEi+.+\:S\:.{11}\\42", RegexOptions.Compiled);
+            Regex pagTokenRegex = new Regex (@"GAEi+.+\:S\:.{11}\\x22", RegexOptions.Compiled);
 
             // HTML Response
             string response;
@@ -185,7 +185,7 @@ namespace PlayStoreCrawler
                     }
 
                     // Reading Match from Regex, and applying needed replacements
-                    string pagToken = rgxMatch.Value.Replace (":S:", "%3AS%3A").Replace("\\42", String.Empty).Replace(@"\\u003d", String.Empty);
+                    string pagToken = rgxMatch.Value.Replace (":S:", "%3AS%3A").Replace("\\x22", String.Empty).Replace(@"\\u003d", String.Empty);
 
                     // Assembling new PostData with paging values
                     string postData = String.Format (Consts.POST_DATA, pagToken);
