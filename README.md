@@ -70,8 +70,6 @@ Here's a <a href="https://s3.amazonaws.com/GooglePlayStore/Google%20Play%20Stats
 
 # How about the database?
 
-* I have made my MongoDB database public, including a user with read/write permissions so we can all use and populate the same database
-
 * If you feel like, you can make your own MongoDB Database and change the code Consts to point the output to your own MongoDB Database. No Biggie
 
 
