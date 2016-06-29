@@ -59,6 +59,7 @@ namespace SharedLibrary
         public static readonly string IN_APP_PURCHASE      = "//div[@class='info-container']/div[@class='inapp-msg']";
         public static readonly string DEVELOPER_URLS       = "//div[@class='content contains-text-link']/a[@class='dev-link']";
         public static readonly string PHYSICAL_ADDRESS     = "//div[@class='content physical-address']";
+        public static readonly string INTERACTIVE_ELEMENTS = "//div[@class='meta-info']//div[@class='title']";
         public static readonly string APP_SCREENSHOTS      = "//div[@class='thumbnails' ]//img[contains(@class,'screenshot')]";
         public static readonly string WHATS_NEW            = "//div[@class='recent-change']";
 

@@ -339,6 +339,18 @@ namespace SharedLibrary
             currentNode = map.DocumentNode.SelectSingleNode (Consts.PHYSICAL_ADDRESS);
             parsedApp.PhysicalAddress = currentNode == null ? String.Empty : currentNode.InnerText.Replace("\n"," ").Trim ();
             
+            // Parsing Interactive Elements (if available)
+            nodesCollection = map.DocumentNode.SelectNodes (Consts.INTERACTIVE_ELEMENTS);
+
+            if(nodesCollection != null && nodesCollection.Count > 0)
+            {
+                // Trying to reach the node that contains the "Interactive Elements" title
+                if ( (currentNode = nodesCollection.Where(t => t.InnerText.IndexOf("Interactive Elements") >= 0).FirstOrDefault()) != null)
+                {
+                    parsedApp.InteractiveElements = currentNode.NextSibling.NextSibling.InnerText.Split (',').Select (t => t.ToUpper ().Trim()).ToList ();
+                }
+            }
+
             return parsedApp;
         }
 

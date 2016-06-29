@@ -10,42 +10,43 @@ namespace SharedLibrary.Models
     public class AppModel
 	{
 		[BsonIgnoreIfDefault]
-        public ObjectId _id                    {get;set;}
-        public DateTime ReferenceDate          {get;set;}
-        public string   Url                    {get;set;}
-        public string[] RelatedUrls            {get;set;}
-        public string   Name                   {get;set;}
-        public string   Developer              {get;set;}
-        public bool     IsTopDeveloper         {get;set;}
-        public string   DeveloperURL           {get;set;}
-        public string   DeveloperNormalizedDomain {get;set;}
-        public DateTime PublicationDate        {get;set;}
-        public string   Category               {get;set;}
-        public bool     IsFree                 {get;set;}
-        public double   Price                  {get;set;}
+        public ObjectId     _id                    {get;set;}
+        public DateTime     ReferenceDate          {get;set;}
+        public string       Url                    {get;set;}
+        public string[]     RelatedUrls            {get;set;}
+        public string       Name                   {get;set;}
+        public string       Developer              {get;set;}
+        public bool         IsTopDeveloper         {get;set;}
+        public string       DeveloperURL           {get;set;}
+        public string       DeveloperNormalizedDomain {get;set;}
+        public DateTime     PublicationDate        {get;set;}
+        public string       Category               {get;set;}
+        public bool         IsFree                 {get;set;}
+        public double       Price                  {get;set;}
         [BsonIgnoreIfNull]
-        public string   Currency               {get;set;}
-        public double   Reviewers              {get;set;}
-        public string   CoverImgUrl            {get;set;}
-        public string[] Screenshots            {get;set;}
-        public string   Description            {get;set;}
-        public string   WhatsNew               {get;set;}
-        public Score    Score                  {get;set;}
-        public DateTime LastUpdateDate         {get;set;}
-        public Double   AppSize                {get;set;}
-        public string   Instalations           {get;set;}
-        public string   CurrentVersion         {get;set;}
-        public string   MinimumOSVersion       {get;set;}
-        public string   ContentRating          {get;set;}
-        public bool     HaveInAppPurchases     {get;set;}
-        public string   DeveloperEmail         {get;set;}
-        public string   DeveloperWebsite       {get;set;}
-        public string   DeveloperPrivacyPolicy {get;set;}
-        public string   PhysicalAddress        {get;set;} 
+        public string       Currency               {get;set;}
+        public double       Reviewers              {get;set;}
+        public string       CoverImgUrl            {get;set;}
+        public string[]     Screenshots            {get;set;}
+        public string       Description            {get;set;}
+        public string       WhatsNew               {get;set;}
+        public Score        Score                  {get;set;}
+        public DateTime     LastUpdateDate         {get;set;}
+        public Double       AppSize                {get;set;}
+        public string       Instalations           {get;set;}
+        public string       CurrentVersion         {get;set;}
+        public string       MinimumOSVersion       {get;set;}
+        public string       ContentRating          {get;set;}
+        public bool         HaveInAppPurchases     {get;set;}
+        public string       DeveloperEmail         {get;set;}
+        public string       DeveloperWebsite       {get;set;}
+        public string       DeveloperPrivacyPolicy {get;set;}
+        public string       PhysicalAddress        {get;set;} 
+        public List<String> InteractiveElements    {get;set;} 
 
         // Reviews Related Attributes
-        public string   ReviewsStatus           {get;set;} 
-        public List<AppReview> Reviews          {get;set;} 
+        public string   ReviewsStatus              {get;set;} 
+        public List<AppReview> Reviews             {get;set;} 
 
         // Class Constructor
         public AppModel ()
