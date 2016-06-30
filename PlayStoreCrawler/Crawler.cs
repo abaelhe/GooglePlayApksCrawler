@@ -119,15 +119,27 @@ namespace PlayStoreCrawler
             {
                 _logger.Info ("Reading Collection [{0}]", collection);
 
-                foreach (AppModel app in _mongoDB.FindAllFromCollectionAs<AppModel> (collection))
+                foreach (string app in _mongoDB.FindAllFromCollectionAs<AppModel> (collection).Select(t => t.Url))
                 {
-                    if (!appUrls.Contains(app.Url))
+                    if (!appUrls.Contains(app))
                     {
-                        appUrls.Add (app.Url);
+                        appUrls.Add (app);
                     }
                 }
 
                 _logger.Info ("\t=> Distinct Apps Found {0}", appUrls.Count);
+            }
+
+            // Adding Distinct Apps to the collection of apps to be processed
+            int appsQueued = 0;
+            foreach(string appUrl in appUrls)
+            {
+                _mongoDB.AddToQueue (appUrl);
+                
+                if(appsQueued++ % 10000 == 0)
+                {
+                    _logger.Info ("[Progress] Apps Queued From Past Collections [{0}]", appsQueued);
+                }
             }
         }
 

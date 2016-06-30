@@ -307,12 +307,32 @@ namespace SharedLibrary.MongoDB
 
         public IEnumerable<String> GetHistoryOfCollections()
         {
-            return _database.GetCollectionNames ().Where (t => t.IndexOf ("PlayStore_2") >= 0);
+            List<String> collectionNames = new List<String> ()
+            {
+                "PlayStore_2015_12",
+                "PlayStore_2014_12",
+                "PlayStore_2015_02",
+                "PlayStore_2015_03",
+                "PlayStore_2015_04",
+                "PlayStore_2015_05",
+                "PlayStore_2015_07",
+                "PlayStore_2015_09",
+                "PlayStore_2015_10",
+                "PlayStore_2015_11",
+                "PlayStore_2015_12",
+                "PlayStore_2016_01",
+                "PlayStore_2016_02",
+                "PlayStore_2016_03",
+                "PlayStore_2016_04",
+                "PlayStore_2016_05",
+            };
+
+            return collectionNames;
         }
 
         public IEnumerable<T> FindAllFromCollectionAs<T>(string collectionName)
         {
-            return _database.GetCollection<T> (collectionName).FindAllAs<T>();
+            return _database.GetCollection<T> (collectionName).FindAll ();
         }
     }
 }

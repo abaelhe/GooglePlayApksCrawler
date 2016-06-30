@@ -7,6 +7,7 @@ using MongoDB.Bson.Serialization.Attributes;
 namespace SharedLibrary.Models
 {
     // Serialization Models for App Data to be stored on MongoDB
+    [BsonIgnoreExtraElements]    
     public class AppModel
 	{
 		[BsonIgnoreIfDefault]
@@ -45,7 +46,7 @@ namespace SharedLibrary.Models
         public List<String> InteractiveElements    {get;set;} 
 
         // Reviews Related Attributes
-        public string   ReviewsStatus              {get;set;} 
+        public string   ReviewsStatus              {get;set;}
         public List<AppReview> Reviews             {get;set;} 
 
         // Class Constructor
