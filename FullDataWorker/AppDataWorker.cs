@@ -95,7 +95,7 @@ namespace FullDataWorker
                     AppModel appData = dataParser.ParseAppPage (appDataResponse, appUrl);
 
                     // Checking If this app is on the database already
-                    if (mongoDB.AppProcessed (appUrl))
+                    if (mongoDB.AppProcessedByUrl (appUrl))
                     {
                         Console.WriteLine ("\t\t.Previous Version of App Found. Updating It");
                         mongoDB.UpdateRecord (appData, "Url", appData.Url);

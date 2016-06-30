@@ -95,7 +95,7 @@ namespace PlayStoreWorker
                     }
 
                     // Checking if this app is on the database already
-                    if (mongoDB.AppProcessed (appUrl))
+                    if (mongoDB.AppProcessedByUrl (appUrl))
                     {
                         // Console Feedback, Comment this line to disable if you want to
                         logger.Info ("Duplicated App, skipped.");
@@ -262,7 +262,7 @@ namespace PlayStoreWorker
                             }
 
                             // Checking if the app was either processed or queued to be processed already
-                            if ((!mongoDB.AppProcessed (fullExtraAppUrl)) && (!mongoDB.IsAppOnQueue(extraAppUrl)))
+                            if ((!mongoDB.AppProcessedByUrl (fullExtraAppUrl)) && (!mongoDB.IsAppOnQueue(extraAppUrl)))
                             {
                                 // Incrementing counter of inserted apps
                                 newExtraApps++;

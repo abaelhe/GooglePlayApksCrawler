@@ -143,9 +143,24 @@ namespace SharedLibrary.MongoDB
         /// </summary>
         /// <param name="appUrl">Url of the App</param>
         /// <returns>True if the app exists into the database, false otherwise</returns>
-        public bool AppProcessed (string appUrl)
+        public bool AppProcessedByUrl (string appUrl)
         {
             var mongoQuery = Query.EQ ("Url", appUrl);
+
+            var queryResponse = _database.GetCollection<AppModel> (_collectionName).FindOne (mongoQuery);
+
+            return queryResponse == null ? false : true;
+        }
+
+        /// <summary>
+        /// Checks whether an app with the same AppId
+        /// already exists into the database
+        /// </summary>
+        /// <param name="appUrl">AppId of the App</param>
+        /// <returns>True if the app exists into the database, false otherwise</returns>
+        public bool AppProcessedById(string appId)
+        {
+            var mongoQuery = Query.EQ ("AppId", appId);
 
             var queryResponse = _database.GetCollection<AppModel> (_collectionName).FindOne (mongoQuery);
 
@@ -333,6 +348,13 @@ namespace SharedLibrary.MongoDB
         public IEnumerable<T> FindAllFromCollectionAs<T>(string collectionName)
         {
             return _database.GetCollection<T> (collectionName).FindAll ();
+        }
+
+        public IEnumerable<AppModel> FindAllById(string appId)
+        {
+            var mongoQuery = Query.EQ ("appId", appId);
+
+            return _database.GetCollection<AppModel> (_collectionName).Find (mongoQuery).SetFlags (QueryFlags.NoCursorTimeout);
         }
     }
 }

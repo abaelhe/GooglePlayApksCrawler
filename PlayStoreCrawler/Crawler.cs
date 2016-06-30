@@ -193,7 +193,7 @@ namespace PlayStoreCrawler
                     // Checks whether the app have been already processed 
 					// or is queued to be processed
 					foundUrls.Add (url);
-                    if ((!_mongoDB.AppProcessed (Consts.APP_URL_PREFIX + url)) && (!_mongoDB.AppQueued (url)))
+                    if ((!_mongoDB.AppProcessedByUrl (Consts.APP_URL_PREFIX + url)) && (!_mongoDB.AppQueued (url)))
                     {
                         // Than, queue it :)
                         _mongoDB.AddToQueue (url);
@@ -243,7 +243,7 @@ namespace PlayStoreCrawler
 						}
                         // Checks whether the app have been already processed 
 						foundUrls.Add (url);
-                        if ((!_mongoDB.AppProcessed (Consts.APP_URL_PREFIX + url)) && (!_mongoDB.AppQueued (url)))
+                        if ((!_mongoDB.AppProcessedByUrl (Consts.APP_URL_PREFIX + url)) && (!_mongoDB.AppQueued (url)))
                         {
                             // Than, queue it :)
                             _mongoDB.AddToQueue (url);
@@ -308,7 +308,7 @@ namespace PlayStoreCrawler
 
                     // Checks whether the app have been already processed 
                     // or is queued to be processed
-                    if ((!mongoDB.AppProcessed (Consts.APP_URL_PREFIX + url)) && (!mongoDB.AppQueued (url)))
+                    if ((!mongoDB.AppProcessedByUrl (Consts.APP_URL_PREFIX + url)) && (!mongoDB.AppQueued (url)))
                     {
                         // Than, queue it :)
                         mongoDB.AddToQueue (url);
@@ -351,7 +351,7 @@ namespace PlayStoreCrawler
 
                         // Checks whether the app have been already processed 
                         // or is queued to be processed
-                        if ((!mongoDB.AppProcessed (Consts.APP_URL_PREFIX + url)) && (!mongoDB.AppQueued (url)))
+                        if ((!mongoDB.AppProcessedByUrl (Consts.APP_URL_PREFIX + url)) && (!mongoDB.AppQueued (url)))
                         {
                             // Than, queue it :)
                             mongoDB.AddToQueue (url);
