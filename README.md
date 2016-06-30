@@ -43,8 +43,6 @@ over and over again, and not paying for it, which led to a huge AWS bill that I 
 Have in mind that downloading the database costs me money, since i pay for the outbound traffic provided by AWS when you query the database
 So, consider making a donation (via paypal) to marcello.grechi@gmail.com (Pay what you want, Humble Bundle style).
 
-Alternativelly, you can use the "AppsExporter" project that i included to write your own query logic, exporting only the records / fields you need, which will be cheaper than downloading the whole database.
-
 # Opening the Database
 
 Since the exported database contains more than 1 milion lines, you will have to use one text editor such as "EM Editor" for opening the file. Regular text editor such as Notepad++ and Sublime won't open it and will crash.

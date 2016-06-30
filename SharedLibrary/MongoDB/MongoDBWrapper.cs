@@ -304,5 +304,15 @@ namespace SharedLibrary.MongoDB
 
             _database.GetCollection (_collectionName).Update (query, Update.Set("Uploaded", true));
         }
+
+        public IEnumerable<String> GetHistoryOfCollections()
+        {
+            return _database.GetCollectionNames ().Where (t => t.IndexOf ("PlayStore_2") >= 0);
+        }
+
+        public IEnumerable<T> FindAllFromCollectionAs<T>(string collectionName)
+        {
+            return _database.GetCollection<T> (collectionName).FindAllAs<T>();
+        }
     }
 }

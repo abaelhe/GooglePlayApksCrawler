@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using SharedLibrary.Proxies;
+using SharedLibrary.Models;
 
 namespace PlayStoreCrawler
 {
@@ -108,6 +109,25 @@ namespace PlayStoreCrawler
             foreach (var countryName in BootstrapTerms.countryNames)
             {
                 CrawlStore (countryName, isUsingProxies);
+            }
+
+            _logger.Info ("\n\nBootstrapping Apps of Past Collections");
+
+            // Iterating over past collections 
+            HashSet<String> appUrls = new HashSet<String> ();
+            foreach (string collection in _mongoDB.GetHistoryOfCollections())
+            {
+                _logger.Info ("Reading Collection [{0}]", collection);
+
+                foreach (AppModel app in _mongoDB.FindAllFromCollectionAs<AppModel> (collection))
+                {
+                    if (!appUrls.Contains(app.Url))
+                    {
+                        appUrls.Add (app.Url);
+                    }
+                }
+
+                _logger.Info ("\t=> Distinct Apps Found {0}", appUrls.Count);
             }
         }
 
