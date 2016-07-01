@@ -14,6 +14,7 @@ namespace SharedLibrary.Models
         public ObjectId     _id                    {get;set;}
         public DateTime     ReferenceDate          {get;set;}
         public string       Url                    {get;set;}
+        public string       AppId                  {get;set;}
         public string[]     RelatedUrls            {get;set;}
         public string       Name                   {get;set;}
         public string       Developer              {get;set;}

@@ -27,14 +27,14 @@ namespace PlayStoreWebAPI.Controllers
             using (MongoDBRepository mongoHandler = new MongoDBRepository ())
             {
                 // Is the App Already on The Database ?            
-                if (mongoHandler.IsAppOnTheDatabase(id))
+                if (!mongoHandler.IsAppOnTheDatabase(id))
                 {
-                    response.error         = true;
-                    response.statusMessage = "App Received Is Already On the Database. Won't be processed again";
+                    response.error         = false;
+                    response.statusMessage = String.Format ("App Id {0} could not be found On the Database.", id);
                     response.appsFound     = null;
 
                     // NotModified Response Code
-                    return Request.CreateResponse (HttpStatusCode.NotModified, response, GetFormatter ());
+                    return Request.CreateResponse (HttpStatusCode.NotFound, response, GetFormatter ());
                 }
 
                 // Finding The Apps
@@ -53,7 +53,7 @@ namespace PlayStoreWebAPI.Controllers
             var formatter = new JsonMediaTypeFormatter ();
             var json      = formatter.SerializerSettings;
 
-            json.DateFormatHandling   = Newtonsoft.Json.DateFormatHandling.MicrosoftDateFormat;
+            json.DateFormatHandling   = Newtonsoft.Json.DateFormatHandling.IsoDateFormat;
             json.DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Utc;
             json.NullValueHandling    = Newtonsoft.Json.NullValueHandling.Ignore;
             json.Formatting           = Newtonsoft.Json.Formatting.Indented;

@@ -194,9 +194,18 @@ namespace SharedLibrary
                 parsedApp.Reviewers = -1;
             }
 
-            // Parsing App Description
+            // Parsing App Description - Conserving the "Description Layout" (New lines, paragraphs etc)
             currentNode           = map.DocumentNode.SelectSingleNode (Consts.APP_DESCRIPTION);
-            parsedApp.Description = currentNode == null ? String.Empty : HttpUtility.HtmlDecode (currentNode.InnerText.Trim ());
+
+            string descriptionText = String.Empty;
+            if(currentNode != null)
+            {
+                descriptionText = currentNode.SelectNodes (".//*").First().InnerHtml.Replace("<br>", System.Environment.NewLine)
+                                                                                           .Replace("<p>", System.Environment.NewLine)
+                                                                                           .Replace("</p>", String.Empty);
+            }
+
+            parsedApp.Description = HttpUtility.HtmlDecode (descriptionText);
 
             // Parsing App "What's new" section
             nodesCollection = map.DocumentNode.SelectNodes (Consts.WHATS_NEW);
@@ -204,7 +213,7 @@ namespace SharedLibrary
             // Sanity Check
             if (nodesCollection != null)
             {
-                parsedApp.WhatsNew = String.Join ("\n", nodesCollection.Select (t => HttpUtility.HtmlDecode (t.InnerText)).ToArray ());
+                parsedApp.WhatsNew = String.Join (System.Environment.NewLine, nodesCollection.Select (t => HttpUtility.HtmlDecode (t.InnerText)).ToArray ());
             }
             
             // Checking for In app Purchases 
@@ -351,6 +360,8 @@ namespace SharedLibrary
                 }
             }
 
+            // Filling AppId based on AppUrl
+            parsedApp.AppId = parsedApp.Url.Split ('=').Last ().ToLower ().Trim();
             return parsedApp;
         }
 

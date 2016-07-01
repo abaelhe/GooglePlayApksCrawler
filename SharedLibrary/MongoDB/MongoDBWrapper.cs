@@ -352,7 +352,7 @@ namespace SharedLibrary.MongoDB
 
         public IEnumerable<AppModel> FindAllById(string appId)
         {
-            var mongoQuery = Query.EQ ("appId", appId);
+            var mongoQuery = Query.EQ ("AppId", appId);
 
             return _database.GetCollection<AppModel> (_collectionName).Find (mongoQuery).SetFlags (QueryFlags.NoCursorTimeout);
         }
