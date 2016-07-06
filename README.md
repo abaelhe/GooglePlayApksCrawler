@@ -18,6 +18,8 @@ The costs related to this project range from Virtual Machines costs, paid HTTP-P
 
 Make it happen !
 
+Alternatively, you can buy the database straight from <a href="https://sellfy.com/marcellolins">My Sellfy Store Page</a>
+
 How do I Receive Updates of this project ?
 ======================
 
