@@ -50,8 +50,7 @@ namespace SharedLibrary.Models
         public string   ReviewsStatus              {get;set;}
         public List<AppReview> Reviews             {get;set;} 
 
-        // Permissions Related Attributes
-        public bool         FoundPermissions       {get;set;}
+        // Permissions Related Attribute
         public List<String> Permissions            {get;set;}
         public List<String> PermissionDescriptions {get;set;}
 

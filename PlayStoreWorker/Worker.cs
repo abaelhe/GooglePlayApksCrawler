@@ -222,6 +222,9 @@ namespace PlayStoreWorker
 
                         // Fetching Permissions
                         response = httpClient.Post (Consts.PERMISSIONS_URL, String.Format(Consts.PERMISSIONS_POST_DATA, parsedApp.AppId));
+
+                        // After requesting it's permissions, the AppId can be normalized to it's "to lower" form
+                        parsedApp.AppId = parsedApp.AppId.ToLower ();
                         
                         // Reseting Retry Counter
                         retryCounter = 0;
@@ -277,8 +280,6 @@ namespace PlayStoreWorker
                             // Sanity check
                             if (permissionsTuple != null && permissionsTuple.Count > 0)
                             {
-                                parsedApp.FoundPermissions = true;
-
                                 // Adding Permissions and their descriptions to the list of permissions for each app
                                 for (int i = 0; i < permissionsTuple.Count; i++)
                                 {

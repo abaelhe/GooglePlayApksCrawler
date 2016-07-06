@@ -361,7 +361,7 @@ namespace SharedLibrary
             }
 
             // Filling AppId based on AppUrl
-            parsedApp.AppId = parsedApp.Url.Split ('=').Last ().ToLower ().Trim();
+            parsedApp.AppId = parsedApp.Url.Split ('=').Last ().Trim();
             return parsedApp;
         }
 
@@ -395,15 +395,29 @@ namespace SharedLibrary
                         // Iterating over Permissions, in pairs
                         for (int splitedIdx = 0; splitedIdx < innerSplit.Length; splitedIdx += 2)
                         {
+                            // Avoiding Array Out of Bounds Access
+                            if(innerSplit.Length == splitedIdx + 1)
+                            {
+                                break;
+                            }
+
                             // Skipping Junk pieces of the splitted array
-                            if(innerSplit[splitedIdx].Length < 3 || innerSplit[splitedIdx].IndexOf(",,,") >= 0 || innerSplit[splitedIdx + 1].IndexOf(",,,") >= 0
-                                                                 || innerSplit[splitedIdx].IndexOf ("http") >= 0 || innerSplit[splitedIdx + 1].IndexOf ("http") >= 0)
+                            if (innerSplit[splitedIdx].Length < 9 || innerSplit[splitedIdx + 1].Length < 9
+                                                                  || innerSplit[splitedIdx].IndexOf(",,,") >= 0    || innerSplit[splitedIdx + 1].IndexOf(",,,") >= 0
+                                                                  || innerSplit[splitedIdx].IndexOf ("http") >= 0  || innerSplit[splitedIdx + 1].IndexOf ("http") >= 0
+                                                                  || innerSplit[splitedIdx].Split(' ').Length == 1 || innerSplit[splitedIdx + 1].Split(' ').Length == 1)
                             {
                                 continue;
                             }
 
-                            string permission            = innerSplit[splitedIdx].ToUpper ().Trim ().Trim(',');
-                            string permissionDescription = innerSplit[splitedIdx + 1].ToUpper ().Trim ().Trim (',');
+                            string permission            = innerSplit[splitedIdx].ToUpper ().Trim (new char [] {',','.',' '});
+                            string permissionDescription = innerSplit[splitedIdx + 1].ToUpper ().Trim(new char [] {',','.',' '});
+
+                            // Discarding yet another set of unecessary junk :(
+                            if (!Char.IsLetter (permission[0]) || !Char.IsLetter (permissionDescription[0]))
+                            {
+                                continue;
+                            }
 
                             if (!permissions.Contains (permission))
                             {
