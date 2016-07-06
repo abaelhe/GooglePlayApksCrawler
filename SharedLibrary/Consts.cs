@@ -11,14 +11,16 @@ namespace SharedLibrary
     public class Consts
     {
         // Web Request Parameters and URLs
-        public static readonly string CRAWL_URL          = "https://play.google.com/store/search?q={0}&c=apps";
-        public static readonly string REVIEWS_URL        = "https://play.google.com/store/getreviews";
-        public static readonly string HOST               = "play.google.com";
-        public static readonly string ORIGIN             = "https://play.google.com";
-        public static readonly string REFERER            = "https://play.google.com/store/apps";
-        public static readonly string INITIAL_POST_DATA  = "ipf=1&xhr=1";
-        public static readonly string PLAY_STORE_PREFIX  = "https://play.google.com/store/apps/details?id=";
-        public static readonly string GITHUBURL          = "Google Play Crawler - [https://github.com/MarcelloLins/GooglePlayAppsCrawler]";
+        public static readonly string CRAWL_URL             = "https://play.google.com/store/search?q={0}&c=apps";
+        public static readonly string REVIEWS_URL           = "https://play.google.com/store/getreviews";
+        public static readonly string PERMISSIONS_URL       = "https://play.google.com/store/xhr/getdoc?authuser=0";
+        public static readonly string HOST                  = "play.google.com";
+        public static readonly string ORIGIN                = "https://play.google.com";
+        public static readonly string REFERER               = "https://play.google.com/store/apps";
+        public static readonly string INITIAL_POST_DATA     = "ipf=1&xhr=1";
+        public static readonly string PERMISSIONS_POST_DATA = "ids={0}&xhr=1";
+        public static readonly string PLAY_STORE_PREFIX     = "https://play.google.com/store/apps/details?id=";
+        public static readonly string GITHUBURL             = "Google Play Crawler - [https://github.com/MarcelloLins/GooglePlayAppsCrawler]";
         
         // Old Post Data - To Allow Rolling Back if Needed
         // public static readonly string POST_DATA          = "start={0}&num=48&numChildren=0&ipf=1&xhr=1";

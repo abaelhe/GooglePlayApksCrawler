@@ -365,6 +365,60 @@ namespace SharedLibrary
             return parsedApp;
         }
 
+        public List<Tuple<String,String>> ParsePermissions(string response)
+        {
+            List<Tuple<String, String>> permissionsTuple = new List<Tuple<String, String>>();
+
+            // Splitting by the "known" permissions delimiter
+            var split = response.Split (new string[] { "[,[[\"" }, StringSplitOptions.None);
+
+            // Sanity Check
+            if (split != null && split.Length > 1)
+            {
+                HashSet<String> permissions                  = new HashSet<String> ();                
+
+                // Iterating over permissions, skipping the first index (which is not useful for us)
+                for (int i = 1; i < split.Count (); i++)
+                {
+                    // Inner Split, to fetch both the Permission and it's description
+                    var innerSplit = split[i].Split (new string[] { "\","}, StringSplitOptions.None);
+
+                    if(innerSplit != null && innerSplit.Length > 1)
+                    {
+                        // Selecting Only Useful Pieces of the Splited Strings
+                        for (int splitedIdx = 0; splitedIdx < innerSplit.Length; splitedIdx++)
+                        {
+                            innerSplit[splitedIdx] = String.Join("", innerSplit[splitedIdx].Where( t => !Char.IsDigit(t) && t != ']' && t != '\n' 
+                                                                                                     && t != '[' && t != '"'));
+                        }
+
+                        // Iterating over Permissions, in pairs
+                        for (int splitedIdx = 0; splitedIdx < innerSplit.Length; splitedIdx += 2)
+                        {
+                            // Skipping Junk pieces of the splitted array
+                            if(innerSplit[splitedIdx].Length < 3 || innerSplit[splitedIdx].IndexOf(",,,") >= 0 || innerSplit[splitedIdx + 1].IndexOf(",,,") >= 0
+                                                                 || innerSplit[splitedIdx].IndexOf ("http") >= 0 || innerSplit[splitedIdx + 1].IndexOf ("http") >= 0)
+                            {
+                                continue;
+                            }
+
+                            string permission            = innerSplit[splitedIdx].ToUpper ().Trim ().Trim(',');
+                            string permissionDescription = innerSplit[splitedIdx + 1].ToUpper ().Trim ().Trim (',');
+
+                            if (!permissions.Contains (permission))
+                            {
+                                permissions.Add (permission);
+
+                                permissionsTuple.Add (new Tuple<String, String> (permission, permissionDescription));
+                            }
+                        }
+                    }
+                }
+            }
+
+            return permissionsTuple;
+        }
+
         /// <summary>
         /// Parses the page of an app for the url of another apps,
         /// it gathers both "Related Apps" and "More from Developer" apps

@@ -72,7 +72,7 @@ namespace PlayStoreWorker
             mongoDB.ConfigureDatabase (Consts.MONGO_USER, Consts.MONGO_PASS, Consts.MONGO_AUTH_DB, fullServerAddress, Consts.MONGO_TIMEOUT, Consts.MONGO_DATABASE, Consts.MONGO_COLLECTION);
 
             // Creating Instance of Web Requests Server
-            WebRequests server = new WebRequests ();
+            WebRequests httpClient = new WebRequests ();
             
             // Queued App Model
             QueuedApp app;
@@ -106,26 +106,27 @@ namespace PlayStoreWorker
                     }
 
                     // Configuring server and Issuing Request
-                    server.Headers.Add (Consts.ACCEPT_LANGUAGE);
-                    server.Host              = Consts.HOST;
-                    server.UserAgent         = Consts.GITHUBURL;
-                    server.Encoding          = "utf-8";
-                    server.EncodingDetection = WebRequests.CharsetDetection.DefaultCharset;
+                    httpClient.Headers.Add (Consts.ACCEPT_LANGUAGE);
+                    httpClient.Host              = Consts.HOST;
+                    httpClient.UserAgent         = Consts.GITHUBURL;
+                    httpClient.Encoding          = "utf-8";
+                    httpClient.EncodingDetection = WebRequests.CharsetDetection.DefaultCharset;                    
 
                     // Checking for the need to use "HTTP Proxies"
                     if (isUsingProxies)
                     {
-                        server.Proxy = ProxiesLoader.GetWebProxy ();
+                        httpClient.Proxy = ProxiesLoader.GetWebProxy ();
                     }
 
                     // Issuing HTTP Request
-                    string response          = server.Get (appUrl);
+                    string response           = httpClient.Get (appUrl);                    
 
                     // Flag Indicating Success while processing and parsing this app
-                    bool ProcessingWorked = true;
+                    bool ProcessingWorked  = true;
+                    bool PermissionsWorked = true;
 
                     // Sanity Check
-                    if (String.IsNullOrEmpty (response) || server.StatusCode != System.Net.HttpStatusCode.OK)
+                    if (String.IsNullOrEmpty (response) || httpClient.StatusCode != System.Net.HttpStatusCode.OK)
                     {
                         logger.Info ("Error opening app page : " + appUrl);
                         ProcessingWorked = false;
@@ -136,7 +137,7 @@ namespace PlayStoreWorker
 						}
                         
                         // Renewing WebRequest Object to get rid of Cookies
-                        server = new WebRequests ();
+                        httpClient = new WebRequests ();
 
                         // Fallback time variable
                         double waitTime;
@@ -171,7 +172,7 @@ namespace PlayStoreWorker
                         Thread.Sleep (Convert.ToInt32 (waitTime));
 
                         // If The Status code is "ZERO" (it means 404) - App must be removed from "Queue"
-                        if (server.StatusCode == 0)
+                        if (httpClient.StatusCode == 0)
                         {
                             // Console Feedback
                             logger.Info ("\tApp Not Found (404) - " + app.Url);
@@ -187,7 +188,7 @@ namespace PlayStoreWorker
 
                         // Parsing Useful App Data
                         AppModel parsedApp = parser.ParseAppPage (response, appUrl); 
-
+                        
                         // Normalizing URLs
                         if (!String.IsNullOrWhiteSpace (parsedApp.DeveloperPrivacyPolicy))
                         {
@@ -217,6 +218,83 @@ namespace PlayStoreWorker
                         catch
                         {
                             logger.Info ("\tNo Related Apps Found. Skipping");
+                        }
+
+                        // Fetching Permissions
+                        response = httpClient.Post (Consts.PERMISSIONS_URL, String.Format(Consts.PERMISSIONS_POST_DATA, parsedApp.AppId));
+                        
+                        // Reseting Retry Counter
+                        retryCounter = 0;
+
+                        // Sanity Check
+                        if (String.IsNullOrEmpty (response) || httpClient.StatusCode != System.Net.HttpStatusCode.OK)
+                        {
+                            logger.Info ("Error parsing apps permissions: " + appUrl);
+                            PermissionsWorked = false;
+
+                            if (isUsingProxies)
+                            {
+                                ProxiesLoader.IncrementCurrentProxy ();
+                            }
+
+                            // Renewing WebRequest Object to get rid of Cookies
+                            httpClient = new WebRequests ();
+
+                            // Fallback time variable
+                            double waitTime;
+
+                            // Checking which "Waiting Logic" to use - If there are proxies being used, there's no need to wait too much
+                            // If there are no proxies in use, on the other hand, the process must wait more time
+                            if (isUsingProxies)
+                            {
+                                // Waits two seconds everytime
+                                waitTime = TimeSpan.FromSeconds (2).TotalMilliseconds;
+                            }
+                            else
+                            {
+                                // Increments retry counter
+                                retryCounter++;
+
+                                // Checking for maximum retry count
+                                if (retryCounter >= 8)
+                                {
+                                    waitTime = TimeSpan.FromMinutes (20).TotalMilliseconds;
+                                }
+                                else
+                                {
+                                    // Calculating next wait time ( 2 ^ retryCounter seconds)
+                                    waitTime = TimeSpan.FromSeconds (Math.Pow (2, retryCounter)).TotalMilliseconds;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            // Reseting retry counter
+                            retryCounter = 0;
+
+                            List<Tuple<String, String>> permissionsTuple = parser.ParsePermissions (response);
+
+                            // Sanity check
+                            if (permissionsTuple != null && permissionsTuple.Count > 0)
+                            {
+                                parsedApp.FoundPermissions = true;
+
+                                // Adding Permissions and their descriptions to the list of permissions for each app
+                                for (int i = 0; i < permissionsTuple.Count; i++)
+                                {
+                                    var tuple = permissionsTuple[i];
+
+                                    // Initializing Lists
+                                    if (parsedApp.Permissions == null)
+                                    {
+                                        parsedApp.Permissions            = new List<String> ();
+                                        parsedApp.PermissionDescriptions = new List<String> ();
+                                    }
+
+                                    parsedApp.Permissions.Add (tuple.Item1);
+                                    parsedApp.PermissionDescriptions.Add (tuple.Item2);
+                                }
+                            }
                         }
 
                         // Inserting App into Mongo DB Database
