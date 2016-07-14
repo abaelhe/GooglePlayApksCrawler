@@ -1,0 +1,21 @@
+version: 3.0.{build}
+
+# x86 / x64 / AnyCPU
+platform: Any CPU
+
+# Debug vs Release build-configuration
+configuration: Release
+
+
+# Setting the project to have enabled both account and project nuget feeds (we are not using this, so it makes no difference)  
+nuget:
+  account_feed: true
+  project_feed: true
+
+# Fail upon the first error
+matrix:
+  fast_finish: true
+  
+# Nuget Package Restore
+before_build:
+  - cmd: nuget restore PlayStoreCrawler.sln
