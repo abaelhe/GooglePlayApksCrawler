@@ -1,0 +1,19 @@
+# Change Log
+All notable changes to this project will be documented in this file.
+This project adheres to [Semantic Versioning](http://semver.org/).
+
+## [V1.4] - Web API Sketch
+### WIP (Work In Progress)
+- Web Restful API to fetch data from the database / queue an app to be processed by the workers
+
+## [V1.3] - Permissions Parsing fully functional
+### Added / Tested
+- Complete permissions parsing feature
+
+## [V1.2] - First try on permissions Parsing - 2016-07-01
+### Added
+- First implementation of parsing of both Permissions and their descriptipns
+
+## [V1.1] - AppID - 2016-06-28
+### Added
+- AppId added to the AppModel class
