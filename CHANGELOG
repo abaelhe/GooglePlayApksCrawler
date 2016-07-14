@@ -2,11 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [V1.4] - Web API Sketch
+## [V1.4] - Web API Sketch - 2016-07-14
 ### WIP (Work In Progress)
 - Web Restful API to fetch data from the database / queue an app to be processed by the workers
 
-## [V1.3] - Permissions Parsing fully functional
+## [V1.3] - Permissions Parsing fully functional - 2016-07-11
 ### Added / Tested
 - Complete permissions parsing feature
 
